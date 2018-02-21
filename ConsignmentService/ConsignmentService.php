@@ -161,7 +161,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
         -------
         $recipients = ['johndoe@example.com'];
 
-        $attachment = \Swift_Attachment::fromPath($reportFile->getPathname());
+        $attachment = \Swift_Attachment::fromPath($file->getPathname());
         $attachment->setFilename('report-'.$report->getId().'.csv');
 
         $message = \Swift_Message::newInstance()
