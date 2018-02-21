@@ -14,16 +14,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('loevgaard_dandomain_consignment');
 
-//        $rootNode
-//            ->children()
-//                ->arrayNode('dandomain_order_state_ids')
-//                    ->info('The order state ids from Dandomain that should be considered as stock movements when an order is persisted')
-//                    ->isRequired()
-//                    ->cannotBeEmpty()
-//                    ->scalarPrototype()->end()
-//                ->end()
-//            ->end()
-//        ;
+        $rootNode
+            ->children()
+                ->scalarNode('report_dir')
+                    ->info('The directory where report files will be saved')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

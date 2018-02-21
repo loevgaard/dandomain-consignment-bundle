@@ -1,1 +1,3 @@
 services:
+    loevgaard_dandomain_consignment.consignment_service_collection:
+        class: Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection

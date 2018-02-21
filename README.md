@@ -59,6 +59,8 @@ class AppKernel extends Kernel
 ```yaml
 # app/config/config.yml
 
+loevgaard_dandomain_consignment:
+    report_dir: "insert directory"
 ```
 
 ### Step 5: Update your database schema

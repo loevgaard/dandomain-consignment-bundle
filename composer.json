@@ -9,10 +9,15 @@
             "email": "joachim@loevgaard.dk"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
         "doctrine/doctrine-bundle": "^1.6",
+        "loevgaard/dandomain-consignment-entities": "dev-master",
+        "loevgaard/dandomain-foundation-entities": "dev-master",
+        "psr/log": "^1.0",
         "symfony/framework-bundle": "^3.3||^4.0",
+        "symfony/options-resolver": "^3.0||^4.0",
         "symfony/yaml": "^3.0||^4.0"
     },
     "require-dev": {
