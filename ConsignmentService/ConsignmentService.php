@@ -244,6 +244,26 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     }
 
     /**
+     * @param LoggerInterface $logger
+     * @return ConsignmentServiceInterface
+     */
+    public function setLogger(LoggerInterface $logger) : ConsignmentServiceInterface
+    {
+        $this->logger = $logger;
+        return $this;
+    }
+
+    /**
+     * @param ManufacturerInterface $manufacturer
+     * @return ConsignmentServiceInterface
+     */
+    public function setManufacturer(ManufacturerInterface $manufacturer) : ConsignmentServiceInterface
+    {
+        $this->manufacturer = $manufacturer;
+        return $this;
+    }
+
+    /**
      * This method should return an array of included product ids
      * It excludes the excluded product ids, by using the getProductQueryBuilder method
      *
