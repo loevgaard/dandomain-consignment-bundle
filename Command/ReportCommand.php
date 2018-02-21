@@ -42,8 +42,8 @@ class ReportCommand extends ContainerAwareCommand
             ->addOption('deliver', null, InputOption::VALUE_REQUIRED, 'If set the command will deliver the report. Default: true', true)
             ->addOption('start', null, InputOption::VALUE_REQUIRED, 'The start date in the format `YYYY-MM-DD`')
             ->addOption('end', null, InputOption::VALUE_REQUIRED, 'The end date in the format `YYYY-MM-DD`')
-            ->addOption('updateLastStockMovement', null, InputOption::VALUE_REQUIRED, 'If set, the command will update the last stock movement property for the manufacturer', true)
-            ->addOption('useLastStockMovement', null, InputOption::VALUE_REQUIRED, 'If set, the command will use the last stock movement as the starting point when generating the report', true)
+            ->addOption('update-last-stock-movement', null, InputOption::VALUE_REQUIRED, 'If set, the command will update the last stock movement property for the manufacturer', true)
+            ->addOption('use-last-stock-movement', null, InputOption::VALUE_REQUIRED, 'If set, the command will use the last stock movement as the starting point when generating the report', true)
         ;
     }
 
@@ -58,8 +58,8 @@ class ReportCommand extends ContainerAwareCommand
         // fetch arguments and options
         $manufacturer = $input->getArgument('manufacturer');
         $deliver = $input->getOption('deliver') === true || $input->getOption('deliver') === 'true';
-        $updateLastStockMovement = $input->getOption('updateLastStockMovement') === true || $input->getOption('updateLastStockMovement') === 'true';
-        $useLastStockMovement = $input->getOption('useLastStockMovement') === true || $input->getOption('useLastStockMovement') === 'true';
+        $updateLastStockMovement = $input->getOption('update-last-stock-movement') === true || $input->getOption('update-last-stock-movement') === 'true';
+        $useLastStockMovement = $input->getOption('use-last-stock-movement') === true || $input->getOption('use-last-stock-movement') === 'true';
         $start = $input->getOption('start');
         $end = $input->getOption('end');
 
