@@ -4,6 +4,8 @@ services:
         arguments:
             - "@loevgaard_dandomain_foundation.manufacturer_repository"
             - "@loevgaard_dandomain_consignment.consignment_service_collection"
+        tags:
+            - { name: "console.command" }
 
     loevgaard_dandomain_consignment.consignment_service_collection:
         class: Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection
