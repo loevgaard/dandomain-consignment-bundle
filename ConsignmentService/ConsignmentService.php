@@ -127,6 +127,13 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
         return $report;
     }
 
+    /**
+     * @param ReportInterface $report
+     * @param array $options
+     * @return \SplFileObject
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function generateReportFile(ReportInterface $report, array $options = []): \SplFileObject
     {
         $file = $this->getFile();
@@ -140,9 +147,18 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
 
         $report->setFile($file);
 
+        $this->reportRepository->flush();
+
         return $file;
     }
 
+    /**
+     * @param ReportInterface $report
+     * @param array $options
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function deliverReport(ReportInterface $report, array $options = []) : bool
     {
         if(!$report->isDeliverable()) {

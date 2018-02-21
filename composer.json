@@ -14,6 +14,7 @@
         "php": "^7.1",
         "doctrine/doctrine-bundle": "^1.6",
         "loevgaard/dandomain-consignment-entities": "dev-master",
+        "loevgaard/dandomain-foundation-bundle": "dev-master",
         "loevgaard/dandomain-foundation-entities": "dev-master",
         "psr/log": "^1.0",
         "symfony/framework-bundle": "^3.3||^4.0",

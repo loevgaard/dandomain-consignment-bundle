@@ -1,3 +1,9 @@
 services:
+    loevgaard_dandomain_consignment.command.report:
+        class: Loevgaard\DandomainConsignmentBundle\Command\ReportCommand
+        arguments:
+            - "@loevgaard_dandomain_foundation.manufacturer_repository"
+            - "@loevgaard_dandomain_consignment.consignment_service_collection"
+
     loevgaard_dandomain_consignment.consignment_service_collection:
         class: Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection
