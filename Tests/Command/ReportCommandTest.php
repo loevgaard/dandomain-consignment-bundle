@@ -4,6 +4,8 @@ namespace Loevgaard\DandomainConsignmentBundle\Tests\Command;
 
 use Loevgaard\DandomainConsignmentBundle\Command\ReportCommand;
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
+use Loevgaard\DandomainConsignmentBundle\Exception\InvalidDateFormatException;
+use Loevgaard\DandomainConsignmentBundle\Exception\NonExistentManufacturerException;
 use Loevgaard\DandomainFoundation\Repository\ManufacturerRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
@@ -14,7 +16,7 @@ class ReportCommandTest extends TestCase
 {
     public function testExpectNonExistentManufacturer()
     {
-        $this->expectExceptionMessage('The manufacturer does not exist');
+        $this->expectException(NonExistentManufacturerException::class);
 
         $command = $this->getCommand();
         $this->execute($command);
@@ -22,7 +24,7 @@ class ReportCommandTest extends TestCase
 
     public function testExpectWrongStartDateFormat()
     {
-        $this->expectExceptionMessage('The format for start is invalid');
+        $this->expectException(InvalidDateFormatException::class);
 
         $command = $this->getCommand();
         $this->execute($command, 'm', '20180101');
@@ -30,7 +32,7 @@ class ReportCommandTest extends TestCase
 
     public function testExpectWrongEndDateFormat()
     {
-        $this->expectExceptionMessage('The format for end is invalid');
+        $this->expectException(InvalidDateFormatException::class);
 
         $command = $this->getCommand();
         $this->execute($command, 'm', null, '20180101');

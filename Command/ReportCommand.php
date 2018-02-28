@@ -3,7 +3,10 @@
 namespace Loevgaard\DandomainConsignmentBundle\Command;
 
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
+use Loevgaard\DandomainConsignmentBundle\Exception\ConsignmentNotEnabledException;
+use Loevgaard\DandomainConsignmentBundle\Exception\InvalidDateFormatException;
 use Loevgaard\DandomainConsignmentBundle\Exception\NonExistentConsignmentServiceException;
+use Loevgaard\DandomainConsignmentBundle\Exception\NonExistentManufacturerException;
 use Loevgaard\DandomainFoundation\Repository\ManufacturerRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
@@ -49,12 +52,13 @@ class ReportCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
-     *
      * @return int|null|void
-     *
+     * @throws ConsignmentNotEnabledException
+     * @throws InvalidDateFormatException
      * @throws NonExistentConsignmentServiceException
+     * @throws NonExistentManufacturerException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,14 +74,14 @@ class ReportCommand extends ContainerAwareCommand
         if ($start) {
             $start = \DateTime::createFromFormat('Y-m-d', $start);
             if (false === $start) {
-                throw new \InvalidArgumentException('The format for start is invalid');
+                throw new InvalidDateFormatException('The format for start is invalid');
             }
         }
 
         if ($end) {
             $end = \DateTime::createFromFormat('Y-m-d', $end);
             if (false === $end) {
-                throw new \InvalidArgumentException('The format for end is invalid');
+                throw new InvalidDateFormatException('The format for end is invalid');
             }
         }
 
@@ -85,12 +89,12 @@ class ReportCommand extends ContainerAwareCommand
         $manufacturer = $this->manufacturerRepository->findOneByExternalId($manufacturer);
 
         if (!$manufacturer) {
-            throw new \InvalidArgumentException('The manufacturer does not exist');
+            throw new NonExistentManufacturerException('The manufacturer does not exist');
         }
 
         // check if the manufacturer is enabled for consignment
         if (!$manufacturer->isConsignment()) {
-            throw new \InvalidArgumentException('Consignment is not enabled for the manufacturer');
+            throw new ConsignmentNotEnabledException('Consignment is not enabled for the manufacturer');
         }
 
         if ($input->isInteractive()) {
