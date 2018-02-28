@@ -6,9 +6,9 @@ use Loevgaard\DandomainConsignmentBundle\Command\ReportCommand;
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
 use Loevgaard\DandomainFoundation\Repository\ManufacturerRepository;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ReportCommandTest extends TestCase
 {
@@ -56,7 +56,7 @@ class ReportCommandTest extends TestCase
         return $command;
     }
 
-    private function execute(ReportCommand $command, $manufacturer = 'manufacturer', $start = null, $end = null) : CommandTester
+    private function execute(ReportCommand $command, $manufacturer = 'manufacturer', $start = null, $end = null): CommandTester
     {
         $application = new Application();
         $application->setAutoExit(false);
@@ -67,11 +67,11 @@ class ReportCommandTest extends TestCase
             'manufacturer' => $manufacturer,
         ];
 
-        if($start) {
+        if ($start) {
             $input['--start'] = $start;
         }
 
-        if($end) {
+        if ($end) {
             $input['--end'] = $end;
         }
 
