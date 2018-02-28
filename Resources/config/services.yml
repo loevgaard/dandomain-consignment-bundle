@@ -1,4 +1,18 @@
 services:
+    loevgaard_dandomain_consignment.command.disable:
+        class: Loevgaard\DandomainConsignmentBundle\Command\DisableCommand
+        arguments:
+            - "@loevgaard_dandomain_foundation.manufacturer_repository"
+        tags:
+            - { name: "console.command" }
+
+    loevgaard_dandomain_consignment.command.enable:
+        class: Loevgaard\DandomainConsignmentBundle\Command\EnableCommand
+        arguments:
+            - "@loevgaard_dandomain_foundation.manufacturer_repository"
+        tags:
+            - { name: "console.command" }
+
     loevgaard_dandomain_consignment.command.report:
         class: Loevgaard\DandomainConsignmentBundle\Command\ReportCommand
         arguments:
