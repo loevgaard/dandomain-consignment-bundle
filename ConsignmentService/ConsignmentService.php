@@ -217,7 +217,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
 
         $qb = $this->entityManager->createQueryBuilder();
         $qb->select('s, p')
-            ->from('AppBundle:StockMovement', 's')
+            ->from('Loevgaard\DandomainStock\Entity\StockMovement', 's')
             ->join('s.product', 'p')
             ->andWhere($qb->expr()->in('p.id', ':includedProductIds'))
             ->andWhere($qb->expr()->in('s.type', ':stockMovementTypes'))
