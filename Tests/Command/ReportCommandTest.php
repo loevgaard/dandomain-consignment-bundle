@@ -46,6 +46,7 @@ class ReportCommandTest extends TestCase
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|ManufacturerRepository $manufacturerRepository */
         $manufacturerRepository = $this->getMockBuilder(ManufacturerRepository::class)->disableOriginalConstructor()->getMock();
+        $manufacturerRepository->method('findOneByExternalId')->willReturn(null);
 
         $consignmentServiceCollection = new ConsignmentServiceCollection();
 
