@@ -6,6 +6,8 @@ namespace Loevgaard\DandomainConsignmentBundle\ConsignmentService;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Loevgaard\DandomainConsignment\Entity\Generated\ReportInterface;
 use Loevgaard\DandomainConsignment\Entity\Report;
@@ -76,7 +78,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      *
      * @return ReportInterface
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      */
     public function generateReport(array $options = []): ReportInterface
     {
@@ -135,8 +137,8 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      *
      * @return \SplFileObject
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function generateReportFile(ReportInterface $report, array $options = []): \SplFileObject
     {
@@ -162,8 +164,8 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      *
      * @return bool
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function deliverReport(ReportInterface $report, array $options = []): bool
     {

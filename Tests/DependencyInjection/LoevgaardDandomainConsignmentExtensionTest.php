@@ -12,7 +12,7 @@ use Symfony\Component\Yaml\Parser;
 
 class LoevgaardDandomainConsignmentExtensionTest extends TestCase
 {
-    public function testThrowsExceptionUnlessAltapayUsernameSet()
+    public function testThrowsInvalidConfigException()
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -30,6 +30,14 @@ class LoevgaardDandomainConsignmentExtensionTest extends TestCase
         $loader->load([$config], $container);
 
         $this->assertSame($config['report_dir'], $container->getParameter('loevgaard_dandomain_consignment.report_dir'));
+    }
+
+    public function testThrowsLogicException()
+    {
+        $this->expectException(\LogicException::class);
+
+        $extension = new LoevgaardDandomainConsignmentExtension();
+        $extension->prepend(new ContainerBuilder());
     }
 
     /**
