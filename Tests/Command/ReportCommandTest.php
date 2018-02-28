@@ -14,7 +14,6 @@ class ReportCommandTest extends TestCase
 {
     public function testExpectNonExistentManufacturer()
     {
-        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The manufacturer does not exist');
 
         $command = $this->getCommand();
@@ -23,7 +22,6 @@ class ReportCommandTest extends TestCase
 
     public function testExpectWrongStartDateFormat()
     {
-        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The format for start is invalid');
 
         $command = $this->getCommand();
@@ -32,7 +30,6 @@ class ReportCommandTest extends TestCase
 
     public function testExpectWrongEndDateFormat()
     {
-        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The format for end is invalid');
 
         $command = $this->getCommand();
