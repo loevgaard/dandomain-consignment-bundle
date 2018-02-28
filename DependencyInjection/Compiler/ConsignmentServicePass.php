@@ -11,7 +11,7 @@ class ConsignmentServicePass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(ConsignmentServiceCollection::class)) {
+        if (!$container->has('loevgaard_dandomain_consignment.consignment_service_collection')) {
             return;
         }
 
