@@ -1,4 +1,5 @@
 services:
+    # Commands
     loevgaard_dandomain_consignment.command.disable:
         class: Loevgaard\DandomainConsignmentBundle\Command\DisableCommand
         arguments:
@@ -20,6 +21,12 @@ services:
             - "@loevgaard_dandomain_consignment.consignment_service_collection"
         tags:
             - { name: "console.command" }
+
+    # Repositories
+    loevgaard_dandomain_consignment.repository.report:
+        class: Loevgaard\DandomainConsignment\Repository\ReportRepository
+        arguments:
+            - "@doctrine"
 
     loevgaard_dandomain_consignment.consignment_service_collection:
         class: Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection
