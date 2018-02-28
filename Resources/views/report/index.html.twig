@@ -1,0 +1,32 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block content %}
+    <h1>Reports</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Oprettet</th>
+                <th>Brand</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>{{ report.createdAt|date }}</td>
+                <td>{{ report.manufacturer.name }}</td>
+                <td>{{ report.status }}</td>
+                <td><a href="{{ path('loevgaard_dandomain_consignment_report_show', { 'id': report.id }) }}">Show</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(reports) }}
+    </div>
+{% endblock %}

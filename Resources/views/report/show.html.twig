@@ -1,0 +1,60 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block content %}
+    <h1>Consignment-rapport {{ consignmentReport.id }}</h1>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>{{ consignmentReport.id }}</dd>
+        <dt>Oprettet</dt>
+        <dd>{{ consignmentReport.createdAt|date }}</dd>
+        <dt>Status</dt>
+        <dd>{{ consignmentReport.status }}</dd>
+        {% if consignmentReport.isError() %}
+            <dt>Fejl</dt>
+            <dd>{{ consignmentReport.getError() }}</dd>
+        {% endif %}
+    </dl>
+
+    {% if consignmentReport.stockMovements.count %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Id på lagerbevægelse</th>
+                    <th>Oprettet</th>
+                    <th>Antal</th>
+                    <th>EAN</th>
+                    <th>Style / Leverandørproduktnumer</th>
+                    <th>Produktnummer</th>
+                    <th>Produkt</th>
+                    <th>Reklamation</th>
+                    <th>Reference</th>
+                    <th style="text-align: right">Stykpris</th>
+                    <th style="text-align: right">Totalpris</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stockMovement in consignmentReport.stockMovements %}
+                    <tr>
+                        <td>{{ stockMovement.id }}</td>
+                        <td nowrap>{{ stockMovement.createdAt|date }}</td>
+                        <td>{{ stockMovement.quantity }}</td>
+                        <td>{{ stockMovement.product.barCodeNumber ? stockMovement.product.barCodeNumber : 'Tom' }}</td>
+                        <td>{{ stockMovement.product.vendorNumber ? stockMovement.product.vendorNumber : 'Tom' }}</td>
+                        <td>{{ stockMovement.product.number }}</td>
+                        <td>{{ stockMovement.product.translate(26).name }}</td>
+                        <td>{{ stockMovement.complaint ? 'Ja' : 'Nej' }}</td>
+                        <td>{{ stockMovement.reference ? stockMovement.reference : 'Tom' }}</td>
+                        <td style="text-align: right" nowrap>{{ stockMovement.unitPrice|money }}</td>
+                        <td style="text-align: right" nowrap>{{ stockMovement.totalPrice|money }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" style="text-align: right;font-size:18px;font-weight:bold">I alt</td>
+                    <td style="text-align: right;font-size:18px;font-weight:bold">{{ consignmentReport.total|money }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+{% endblock %}

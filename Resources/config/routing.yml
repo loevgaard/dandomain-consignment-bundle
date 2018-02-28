@@ -1,0 +1,11 @@
+loevgaard_dandomain_consignment_report_index:
+    path: /report
+    methods: GET
+    controller: LoevgaardDandomainConsignmentBundle:Report:index
+
+loevgaard_dandomain_consignment_report_show:
+    path: /report/{id}
+    methods: GET
+    controller: LoevgaardDandomainConsignmentBundle:Report:show
+    requirements:
+        page: "\d+"
