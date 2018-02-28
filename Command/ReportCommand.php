@@ -3,6 +3,7 @@
 namespace Loevgaard\DandomainConsignmentBundle\Command;
 
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
+use Loevgaard\DandomainConsignmentBundle\Exception\NonExistentConsignmentServiceException;
 use Loevgaard\DandomainFoundation\Repository\ManufacturerRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
@@ -39,41 +40,43 @@ class ReportCommand extends ContainerAwareCommand
             ->setName('loevgaard:dandomain-consignment:report')
             ->setDescription('Generates a report and optionally delivers it to the given manufacturer')
             ->addArgument('manufacturer', InputArgument::REQUIRED, 'The manufacturer to generate a report for. Use the id from Dandomain')
-            ->addOption('deliver', null, InputOption::VALUE_REQUIRED, 'If set the command will deliver the report. Default: true', true)
             ->addOption('start', null, InputOption::VALUE_REQUIRED, 'The start date in the format `YYYY-MM-DD`')
             ->addOption('end', null, InputOption::VALUE_REQUIRED, 'The end date in the format `YYYY-MM-DD`')
-            ->addOption('update-last-stock-movement', null, InputOption::VALUE_REQUIRED, 'If set, the command will update the last stock movement property for the manufacturer', true)
-            ->addOption('use-last-stock-movement', null, InputOption::VALUE_REQUIRED, 'If set, the command will use the last stock movement as the starting point when generating the report', true)
+            ->addOption('do-not-deliver', null, InputOption::VALUE_NONE, 'If set the command will NOT deliver the report', false)
+            ->addOption('do-not-update-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT update the last stock movement property for the manufacturer', false)
+            ->addOption('do-not-use-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT use the last stock movement as the starting point when generating the report', false)
         ;
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
-     * @throws \Loevgaard\DandomainConsignmentBundle\Exception\NonExistentConsignmentServiceException
+     *
+     * @throws NonExistentConsignmentServiceException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // fetch arguments and options
         $manufacturer = $input->getArgument('manufacturer');
-        $deliver = $input->getOption('deliver') === true || $input->getOption('deliver') === 'true';
-        $updateLastStockMovement = $input->getOption('update-last-stock-movement') === true || $input->getOption('update-last-stock-movement') === 'true';
-        $useLastStockMovement = $input->getOption('use-last-stock-movement') === true || $input->getOption('use-last-stock-movement') === 'true';
         $start = $input->getOption('start');
         $end = $input->getOption('end');
+        $doNotDeliver = boolval($input->getOption('do-not-deliver'));
+        $doNotUpdateLastStockMovement = boolval($input->getOption('do-not-update-last-stock-movement'));
+        $doNotUseLastStockMovement = boolval($input->getOption('do-not-use-last-stock-movement'));
 
         // validate dates
-        if($start) {
+        if ($start) {
             $start = \DateTime::createFromFormat('Y-m-d', $start);
-            if ($start === false) {
+            if (false === $start) {
                 throw new \InvalidArgumentException('The format for start is invalid');
             }
         }
 
-        if($end) {
+        if ($end) {
             $end = \DateTime::createFromFormat('Y-m-d', $end);
-            if ($end === false) {
+            if (false === $end) {
                 throw new \InvalidArgumentException('The format for end is invalid');
             }
         }
@@ -81,27 +84,27 @@ class ReportCommand extends ContainerAwareCommand
         // find manufacturer
         $manufacturer = $this->manufacturerRepository->findOneByExternalId($manufacturer);
 
-        if(!$manufacturer) {
+        if (!$manufacturer) {
             throw new \InvalidArgumentException('The manufacturer does not exist');
         }
 
         // check if the manufacturer is enabled for consignment
-        if(!$manufacturer->isConsignment()) {
+        if (!$manufacturer->isConsignment()) {
             throw new \InvalidArgumentException('Consignment is not enabled for the manufacturer');
         }
 
-        if($input->isInteractive()) {
+        if ($input->isInteractive()) {
             // output config
             $table = new Table($output);
             $table
                 ->setHeaders(['Option', 'Value'])
                 ->setRows([
                     ['Manufacturer', $manufacturer->getName()],
-                    ['Delivery', $deliver ? 'Yes' : 'No'],
-                    ['Update last stock movement', $updateLastStockMovement ? 'Yes' : 'No'],
-                    ['Use last stock movement', $useLastStockMovement ? 'Yes' : 'No'],
                     ['Start date', $start ? $start->format('Y-m-d') : 'None'],
                     ['End date', $end ? $end->format('Y-m-d') : 'None'],
+                    ['Deliver?', $doNotDeliver ? 'No' : 'Yes'],
+                    ['Update last stock movement?', $doNotUpdateLastStockMovement ? 'No' : 'Yes'],
+                    ['Use last stock movement?', $doNotUseLastStockMovement ? 'No' : 'Yes'],
                 ]);
             $table->render();
 
@@ -120,17 +123,17 @@ class ReportCommand extends ContainerAwareCommand
 
         // generate the report
         $report = $consignmentService->generateReport([
-            'update_last_stock_movement' => $updateLastStockMovement,
-            'use_last_stock_movement' => $useLastStockMovement,
+            'update_last_stock_movement' => !$doNotUpdateLastStockMovement,
+            'use_last_stock_movement' => !$doNotUseLastStockMovement,
             'start_date' => $start,
-            'end_date' => $end
+            'end_date' => $end,
         ]);
 
         // generate report file because we want to generate the file no matter if the $deliver option is set
         $consignmentService->generateReportFile($report);
 
         // deliver report
-        if($deliver) {
+        if (!$doNotDeliver) {
             $consignmentService->deliverReport($report);
         }
     }

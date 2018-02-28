@@ -20,7 +20,7 @@ class ConsignmentServiceCollection
         $this->consignmentServices = [];
     }
 
-    public function addConsignmentService(ConsignmentServiceInterface $consignmentService) : void
+    public function addConsignmentService(ConsignmentServiceInterface $consignmentService): void
     {
         $class = (new \ReflectionClass($consignmentService))->getShortName();
         $this->consignmentServices[$class] = $consignmentService;
@@ -28,14 +28,16 @@ class ConsignmentServiceCollection
 
     /**
      * @param ManufacturerInterface $manufacturer
+     *
      * @return ConsignmentServiceInterface
+     *
      * @throws NonExistentConsignmentServiceException
      */
-    public function findConsignmentService(ManufacturerInterface $manufacturer) : ConsignmentServiceInterface
+    public function findConsignmentService(ManufacturerInterface $manufacturer): ConsignmentServiceInterface
     {
         $name = Container::camelize($manufacturer->getName()).'ConsignmentService';
 
-        if(!isset($this->consignmentServices[$name])) {
+        if (!isset($this->consignmentServices[$name])) {
             throw new NonExistentConsignmentServiceException('Consignment service `'.$name.'` not found. Did you mean any of these? '.join(', ', array_keys($this->consignmentServices)));
         }
 

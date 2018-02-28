@@ -1,9 +1,10 @@
 <?php
+
 namespace Loevgaard\DandomainConsignmentBundle\DependencyInjection\Compiler;
 
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class ConsignmentServicePass implements CompilerPassInterface
