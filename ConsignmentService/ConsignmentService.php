@@ -174,7 +174,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
         }
 
         $file = $report->getFile();
-        if (!$file || $file->isFile()) {
+        if (!$file || !$file->isFile()) {
             $file = $this->generateReportFile($report);
         }
 
