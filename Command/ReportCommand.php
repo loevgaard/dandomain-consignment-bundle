@@ -42,9 +42,9 @@ class ReportCommand extends ContainerAwareCommand
             ->addArgument('manufacturer', InputArgument::REQUIRED, 'The manufacturer to generate a report for. Use the id from Dandomain')
             ->addOption('start', null, InputOption::VALUE_REQUIRED, 'The start date in the format `YYYY-MM-DD`')
             ->addOption('end', null, InputOption::VALUE_REQUIRED, 'The end date in the format `YYYY-MM-DD`')
-            ->addOption('do-not-deliver', null, InputOption::VALUE_NONE, 'If set the command will NOT deliver the report', false)
-            ->addOption('do-not-update-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT update the last stock movement property for the manufacturer', false)
-            ->addOption('do-not-use-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT use the last stock movement as the starting point when generating the report', false)
+            ->addOption('do-not-deliver', null, InputOption::VALUE_NONE, 'If set the command will NOT deliver the report')
+            ->addOption('do-not-update-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT update the last stock movement property for the manufacturer')
+            ->addOption('do-not-use-last-stock-movement', null, InputOption::VALUE_NONE, 'If set, the command will NOT use the last stock movement as the starting point when generating the report')
         ;
     }
 
