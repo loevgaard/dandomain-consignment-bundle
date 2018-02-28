@@ -2,7 +2,6 @@
 
 namespace Loevgaard\DandomainConsignmentBundle\DependencyInjection\Compiler;
 
-use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -15,7 +14,7 @@ class ConsignmentServicePass implements CompilerPassInterface
             return;
         }
 
-        $definition = $container->findDefinition(ConsignmentServiceCollection::class);
+        $definition = $container->findDefinition('loevgaard_dandomain_consignment.consignment_service_collection');
 
         $taggedServices = $container->findTaggedServiceIds('ldc.consignment_service');
 
