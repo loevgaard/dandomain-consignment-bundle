@@ -22,6 +22,12 @@ services:
         tags:
             - { name: "console.command" }
 
+    # Event Listeners / Subscribers
+    loevgaard_dandomain_consignment.event_listener.product_subscriber:
+        class: Loevgaard\DandomainConsignmentBundle\EventListener\ProductSubscriber
+        tags:
+            - { name: doctrine.event_subscriber }
+
     # Repositories
     loevgaard_dandomain_consignment.repository.report:
         class: Loevgaard\DandomainConsignment\Repository\ReportRepository

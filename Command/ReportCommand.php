@@ -52,9 +52,11 @@ class ReportCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
+     *
      * @throws ConsignmentNotEnabledException
      * @throws InvalidDateFormatException
      * @throws NonExistentConsignmentServiceException
