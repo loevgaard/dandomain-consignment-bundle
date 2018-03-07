@@ -57,6 +57,13 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      */
     protected $includedProductIds;
 
+    /**
+     * Contains the excluded product ids.
+     *
+     * @var array
+     */
+    protected $excludedProductIds;
+
     public function __construct(ManagerRegistry $managerRegistry, ReportRepository $reportRepository, string $reportDir)
     {
         $this->entityManager = $managerRegistry->getManager();
