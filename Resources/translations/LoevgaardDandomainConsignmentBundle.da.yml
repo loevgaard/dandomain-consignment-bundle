@@ -1,0 +1,38 @@
+report:
+    property:
+        id: Id
+        created_at: Oprettet
+        status: Status
+        error: Fejl
+        manufacturer: Leverandør
+
+    index:
+        heading: Rapporter
+
+    show:
+        heading: Consignment rapport %id%
+
+stock_movement:
+    property:
+        id: Id
+        created_at: Oprettet
+        quantity: Antal
+        complaint: Reklamation
+        reference: Reference
+        unit_price: Stykpris
+        total_price: Totalpris
+
+product:
+    property:
+        bar_code: Id
+        vendor_number: Oprettet
+        number: Produktnummer
+        name: Produkt
+
+boolean:
+    yes: Ja
+    no: Nej
+
+empty: Tom
+show: Vis
+actions: Handlinger
