@@ -7,10 +7,10 @@ report:
         manufacturer: Manufacturer
 
     index:
-        heading: "Reports"
+        heading: Reports
 
     show:
-        heading: "Consignment report %id%"
+        heading: Consignment report %id%
 
 stock_movement:
     property:
@@ -33,6 +33,6 @@ boolean:
     yes: Yes
     no: No
 
-empty: "Empty"
-show: "Show"
-actions: "Actions"
+empty: Empty
+show: Show
+actions: Actions
