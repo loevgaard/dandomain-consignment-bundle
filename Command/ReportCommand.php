@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Loevgaard\DandomainConsignmentBundle\Command;
 
 use Loevgaard\DandomainConsignmentBundle\ConsignmentService\ConsignmentServiceCollection;
@@ -132,11 +134,11 @@ class ReportCommand extends ContainerAwareCommand
             'use_last_stock_movement' => !$doNotUseLastStockMovement,
         ];
 
-        if($start) {
+        if ($start) {
             $options['start_date'] = $start;
         }
 
-        if($end) {
+        if ($end) {
             $options['end_date'] = $end;
         }
 

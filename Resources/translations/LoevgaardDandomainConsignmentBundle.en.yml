@@ -1,0 +1,39 @@
+report:
+    property:
+        id: Id
+        created_at: Created
+        status: Status
+        error: Error
+        total: Total
+        manufacturer: Manufacturer
+
+    index:
+        heading: "Reports"
+
+    show:
+        heading: "Consignment report %id%"
+
+stock_movement:
+    property:
+        id: Id
+        created_at: Created
+        quantity: Quantity
+        complaint: Complaint
+        reference: Reference
+        unit_price: Unit price
+        total_price: Total price
+
+product:
+    property:
+        bar_code: Id
+        vendor_number: Created
+        number: Product number
+        name: Product
+
+boolean:
+    yes: Yes
+    no: No
+
+empty: "Empty"
+show: "Show"
+actions: "Actions"

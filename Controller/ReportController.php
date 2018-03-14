@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Loevgaard\DandomainConsignmentBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
@@ -12,6 +14,7 @@ class ReportController extends Controller
 {
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function indexAction(Request $request)
@@ -35,21 +38,19 @@ class ReportController extends Controller
         );
 
         return $this->render('@LoevgaardDandomainConsignment/report/index.html.twig', [
-            'reports' => $reports
+            'reports' => $reports,
         ]);
     }
 
     /**
-     * @param ConsignmentReport $consignmentReport
-     * @return Response
+     * @param Report $report
      *
-     * @Method("GET")
-     * @Route("/{id}", name="admin_consignment_report_show")
+     * @return Response
      */
-    public function showAction(ConsignmentReport $consignmentReport)
+    public function showAction(Report $report)
     {
-        return $this->render('admin/consignmentreport/show.html.twig', [
-            'consignmentReport' => $consignmentReport
+        return $this->render('@LoevgaardDandomainConsignment/report/show.html.twig', [
+            'report' => $report,
         ]);
     }
 }
