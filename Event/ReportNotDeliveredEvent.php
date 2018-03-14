@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 class ReportNotDeliveredEvent extends Event
 {
-    const NAME = 'report.not_delivered';
+    const NAME = 'ldc.report.not_delivered';
 
     /**
      * @var ReportInterface
