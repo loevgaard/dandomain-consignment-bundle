@@ -127,13 +127,21 @@ class ReportCommand extends ContainerAwareCommand
         $consignmentService = $this->consignmentServiceCollection->findConsignmentService($manufacturer);
         $consignmentService->setLogger(new ConsoleLogger($output));
 
-        // generate the report
-        $report = $consignmentService->generateReport([
+        $options = [
             'update_last_stock_movement' => !$doNotUpdateLastStockMovement,
             'use_last_stock_movement' => !$doNotUseLastStockMovement,
-            'start_date' => $start,
-            'end_date' => $end,
-        ]);
+        ];
+
+        if($start) {
+            $options['start_date'] = $start;
+        }
+
+        if($end) {
+            $options['end_date'] = $end;
+        }
+
+        // generate the report
+        $report = $consignmentService->generateReport($options);
 
         // generate report file because we want to generate the file no matter if the $deliver option is set
         $consignmentService->generateReportFile($report);
