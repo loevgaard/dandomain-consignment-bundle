@@ -26,7 +26,7 @@ class YamlTest extends TestCase
     {
         $finder = new Finder();
         $finder->files()->in(getcwd().'/Resources/translations');
-        foreach($finder as $file) {
+        foreach ($finder as $file) {
             $value = Yaml::parseFile($file->getPathname());
             $this->assertTrue(is_array($value));
         }
@@ -38,17 +38,17 @@ class YamlTest extends TestCase
 
         $finder = new Finder();
         $finder->files()->in(getcwd().'/Resources/translations');
-        foreach($finder as $file) {
+        foreach ($finder as $file) {
             $test = $this->flattenYamlFile($file->getPathname());
 
             $this->assertSame($control, $test);
         }
     }
 
-    private function flattenYamlFile(string $file) : array
+    private function flattenYamlFile(string $file): array
     {
         $arr = Yaml::parseFile($file);
-        $str = str_replace(['[',']'], ['_',''], urldecode(http_build_query($arr)));
+        $str = str_replace(['[', ']'], ['_', ''], urldecode(http_build_query($arr)));
         parse_str($str, $flat);
 
         $keys = array_keys($flat);

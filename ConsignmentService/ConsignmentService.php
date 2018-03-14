@@ -20,7 +20,7 @@ use Loevgaard\DandomainStock\Entity\Generated\StockMovementInterface;
 use Loevgaard\DandomainStock\Entity\StockMovement;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class ConsignmentService implements ConsignmentServiceInterface
@@ -36,7 +36,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     protected $reportRepository;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
@@ -71,7 +71,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      */
     protected $excludedProductIds;
 
-    public function __construct(ManagerRegistry $managerRegistry, ReportRepository $reportRepository, EventDispatcher $eventDispatcher, string $reportDir)
+    public function __construct(ManagerRegistry $managerRegistry, ReportRepository $reportRepository, EventDispatcherInterface $eventDispatcher, string $reportDir)
     {
         $this->entityManager = $managerRegistry->getManager();
         $this->reportRepository = $reportRepository;
@@ -186,6 +186,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     {
         if (!$report->isDeliverable()) {
             $this->eventDispatcher->dispatch(ReportNotDeliveredEvent::NAME, new ReportNotDeliveredEvent($report));
+
             return false;
         }
 
