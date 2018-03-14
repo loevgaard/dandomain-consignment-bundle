@@ -91,7 +91,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     {
         // resolve options
         $resolver = new OptionsResolver();
-        $this->configureGenerateReportOptions($resolver);
+        $this->configureOptions($resolver);
         $options = $resolver->resolve($options);
 
         $report = new Report();
@@ -213,7 +213,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     {
         // resolve options
         $resolver = new OptionsResolver();
-        $this->configureQueryBuilderOptions($resolver);
+        $this->configureOptions($resolver);
         $options = $resolver->resolve($options);
 
         $includedProductIds = $this->getIncludedProductIds();
@@ -412,20 +412,12 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
         return new \SplFileObject($filename, 'w+');
     }
 
-    protected function configureGenerateReportOptions(OptionsResolver $resolver): void
+    protected function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined($this->queryBuilderOptions());
         $resolver->setDefaults([
             'valid_bar_codes' => false,
             'valid_vendor_numbers' => false,
             'update_last_stock_movement' => true,
-        ]);
-    }
-
-    protected function configureQueryBuilderOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefined($this->queryBuilderOptions());
-        $resolver->setDefaults([
             'stock_movement_types' => [
                 StockMovement::TYPE_RETURN,
                 StockMovement::TYPE_SALE,
@@ -436,16 +428,5 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
             'start_date' => null,
             'end_date' => null,
         ]);
-    }
-
-    protected function queryBuilderOptions(): array
-    {
-        return [
-            'stock_movement_types',
-            'include_complaints',
-            'use_last_stock_movement',
-            'start_date',
-            'end_date',
-        ];
     }
 }
