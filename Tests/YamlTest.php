@@ -22,7 +22,7 @@ class YamlTest extends TestCase
         $this->assertTrue(is_array($value));
     }
 
-    public function testTranslations()
+    public function testTranslationsValidYaml()
     {
         $finder = new Finder();
         $finder->files()->in(getcwd().'/Resources/translations');
@@ -30,5 +30,30 @@ class YamlTest extends TestCase
             $value = Yaml::parseFile($file->getPathname());
             $this->assertTrue(is_array($value));
         }
+    }
+
+    public function testTranslations()
+    {
+        $control = $this->flattenYamlFile(getcwd().'/Resources/translations/LoevgaardDandomainConsignmentBundle.en.yml');
+
+        $finder = new Finder();
+        $finder->files()->in(getcwd().'/Resources/translations');
+        foreach($finder as $file) {
+            $test = $this->flattenYamlFile($file->getPathname());
+
+            $this->assertSame($control, $test);
+        }
+    }
+
+    private function flattenYamlFile(string $file) : array
+    {
+        $arr = Yaml::parseFile($file);
+        $str = str_replace(['[',']'], ['_',''], urldecode(http_build_query($arr)));
+        parse_str($str, $flat);
+
+        $keys = array_keys($flat);
+        sort($keys);
+
+        return $keys;
     }
 }
