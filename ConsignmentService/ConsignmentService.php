@@ -108,7 +108,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
                 $this->validateVendorNumbers();
             }
 
-            $qb = $this->queryBuilder();
+            $qb = $this->queryBuilder($options);
 
             /** @var StockMovementInterface[] $stockMovements */
             $stockMovements = $qb->getQuery()->getResult();
