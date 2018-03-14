@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Loevgaard\DandomainConsignment\Entity\Generated\ReportInterface;
 use Loevgaard\DandomainConsignment\Entity\Report;
 use Loevgaard\DandomainConsignment\Repository\ReportRepository;
+use Loevgaard\DandomainConsignmentBundle\Event\ReportNotDeliveredEvent;
 use Loevgaard\DandomainConsignmentBundle\Exception\InvalidBarCodeException;
 use Loevgaard\DandomainConsignmentBundle\Exception\InvalidVendorNumberException;
 use Loevgaard\DandomainFoundation\Entity\Generated\ManufacturerInterface;
@@ -19,6 +20,7 @@ use Loevgaard\DandomainStock\Entity\Generated\StockMovementInterface;
 use Loevgaard\DandomainStock\Entity\StockMovement;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class ConsignmentService implements ConsignmentServiceInterface
@@ -32,6 +34,11 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      * @var ReportRepository
      */
     protected $reportRepository;
+
+    /**
+     * @var EventDispatcher
+     */
+    protected $eventDispatcher;
 
     /**
      * The directory where report files will be saved.
@@ -64,10 +71,11 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
      */
     protected $excludedProductIds;
 
-    public function __construct(ManagerRegistry $managerRegistry, ReportRepository $reportRepository, string $reportDir)
+    public function __construct(ManagerRegistry $managerRegistry, ReportRepository $reportRepository, EventDispatcher $eventDispatcher, string $reportDir)
     {
         $this->entityManager = $managerRegistry->getManager();
         $this->reportRepository = $reportRepository;
+        $this->eventDispatcher = $eventDispatcher;
         $this->reportDir = rtrim($reportDir, '/');
         $this->logger = new NullLogger();
 
@@ -177,6 +185,7 @@ abstract class ConsignmentService implements ConsignmentServiceInterface
     public function deliverReport(ReportInterface $report, array $options = []): bool
     {
         if (!$report->isDeliverable()) {
+            $this->eventDispatcher->dispatch(ReportNotDeliveredEvent::NAME, new ReportNotDeliveredEvent($report));
             return false;
         }
 

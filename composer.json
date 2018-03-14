@@ -17,6 +17,7 @@
         "loevgaard/dandomain-foundation-bundle": "dev-master",
         "loevgaard/dandomain-foundation-entities": "dev-master",
         "psr/log": "^1.0",
+        "symfony/event-dispatcher": "^3.0||^4.0",
         "symfony/framework-bundle": "^3.3||^4.0",
         "symfony/options-resolver": "^3.0||^4.0",
         "symfony/yaml": "^3.0||^4.0",
