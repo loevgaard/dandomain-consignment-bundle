@@ -1,11 +1,11 @@
 loevgaard_dandomain_consignment_report_index:
     path: /report
-    defaults: { _controller: '@LoevgaardDandomainConsignmentBundle:Report:index' }
+    defaults: { _controller: 'LoevgaardDandomainConsignmentBundle:Report:index' }
     methods: GET
 
 loevgaard_dandomain_consignment_report_show:
     path: /report/{id}
-    defaults: { _controller: '@LoevgaardDandomainConsignmentBundle:Report:show' }
+    defaults: { _controller: 'LoevgaardDandomainConsignmentBundle:Report:show' }
     methods: GET
     requirements:
         page: \d+
