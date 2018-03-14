@@ -4,7 +4,6 @@ report:
         created_at: Created
         status: Status
         error: Error
-        total: Total
         manufacturer: Manufacturer
 
     index:
