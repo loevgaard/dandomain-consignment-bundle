@@ -22,6 +22,14 @@ services:
         tags:
             - { name: "console.command" }
 
+    loevgaard_dandomain_consignment.command.generate_file:
+        class: Loevgaard\DandomainConsignmentBundle\Command\GenerateFileCommand
+        arguments:
+            - "@loevgaard_dandomain_consignment.repository.report"
+            - "@loevgaard_dandomain_consignment.consignment_service_collection"
+        tags:
+            - { name: "console.command" }
+
     # Event Listeners / Subscribers
     loevgaard_dandomain_consignment.event_listener.product_subscriber:
         class: Loevgaard\DandomainConsignmentBundle\EventListener\ProductSubscriber
