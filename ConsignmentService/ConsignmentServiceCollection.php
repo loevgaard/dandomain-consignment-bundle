@@ -35,7 +35,8 @@ class ConsignmentServiceCollection
      */
     public function findConsignmentService(ManufacturerInterface $manufacturer): ConsignmentServiceInterface
     {
-        $name = Container::camelize($manufacturer->getName()).'ConsignmentService';
+        $name = preg_replace('/[^a-zA-Z0-9 ]+/i', ' ', $manufacturer->getName());
+        $name = Container::camelize($name).'ConsignmentService';
 
         if (!isset($this->consignmentServices[$name])) {
             throw new NonExistentConsignmentServiceException('Consignment service `'.$name.'` not found. Did you mean any of these? '.join(', ', array_keys($this->consignmentServices)));
